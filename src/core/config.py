@@ -4,7 +4,12 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(extra="ignore")
 
-    some_setting: str
+    db_name: str
+    db_user: str
+    db_password: str
+    db_host: str
+    db_port: str
+    db_echo: bool = False
 
 
 settings = Settings(_env_file=".env")

@@ -1,13 +1,30 @@
-version: '3'
+version: '3.9'
 
 services:
 
   app:
+    container_name: app
     build:
       context: ./src
     env_file:
       - .env
     volumes:
       - ./src/:/opt/app
-    container_name: app
+    depends_on:
+      - postgres
+
+
+  postgres:
+    image: postgres:15.1-alpine
+    container_name: postgres
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_PASSWORD: ${db_password}
+      POSTGRES_USER: ${db_user}
+      POSTGRES_DB: ${db_name}
+    env_file:
+      - .env
+    volumes:
+      - ./data/postgresql:/var/lib/postgresql
 
